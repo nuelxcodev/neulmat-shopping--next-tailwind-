@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+}
+.navigation {
+  display: flex;
+  justify-content: space-around;
+}
+.navigation div {
+  margin-inline: 0.5rem;
+}
+.authform {
+  @apply flex flex-col w-[90%];
+}
+.authform input {
+  @apply p-2 border-2 rounded-md mb-2 outline-none;
+}
+.itemcardInfo {
+  height: 5rem;
+  overflow-y: scroll;
+  
+}
+.itemcardInfo::-webkit-scrollbar {
+  display: none;
+}
