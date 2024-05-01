@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./app/auth.config";
+import { NextResponse } from "next/server";
 
 const { auth } = NextAuth(authConfig);
 
@@ -8,22 +9,19 @@ export default auth((req) => {
   const isAuthenticated = !!req.auth;
   const isAdmin = true;
   const isDashboard = nextUrl.pathname.startsWith("/dashboard");
-  const checkoutpage = nextUrl.pathname.startsWith("/checkout");
+  const ischeckoutpage = nextUrl.pathname.startsWith("/checkout");
 
-  if (!isAuthenticated) {
-    console.log("unauthenticated");
+  if (
+    (!isAuthenticated && isDashboard) ||
+    (!isAuthenticated && ischeckoutpage)
+  ) {
     return Response.redirect(new URL("/auth/signin", nextUrl));
   }
-  if (isAuthenticated) {
-    console.log("authenticated");
-    return Response.redirect(new URL("/dashboard", nextUrl));
-    if (isDashboard) {
-    }
-  }
 
-  if (isDashboard && !isAdmin) {
-    return Response.redirect(new URL("/", nextUrl));
+  if (!isDashboard && !ischeckoutpage) {
+    return Response.redirect("/");
   }
+ 
 });
 
 export const config = {

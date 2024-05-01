@@ -8,7 +8,6 @@ async function index() {
   const session = await auth();
 
   // session?.user?.email;
-  console.log(session);
   return (
     <div>
       <Nav />

@@ -3,13 +3,15 @@
 @tailwind utilities;
 
 body {
+  max-width: 1536px;
+  margin: auto;
+  overflow: hidden;
 }
 .navigation {
-  display: flex;
-  justify-content: space-around;
+  @apply flex md:h-max z-50 justify-around flex-col-reverse md:flex-row fixed md:static bg-white w-full md:w-max;
 }
-.navigation div {
-  margin-inline: 0.5rem;
+.navigation section {
+  @apply md:mx-5 flex  my-4 md:my-0  justify-between items-center md:gap-2 w-max;
 }
 .authform {
   @apply flex flex-col w-[90%];
@@ -18,10 +20,54 @@ body {
   @apply p-2 border-2 rounded-md mb-2 outline-none;
 }
 .itemcardInfo {
-  height: 5rem;
+  height: 3rem;
   overflow-y: scroll;
-  
 }
 .itemcardInfo::-webkit-scrollbar {
+  display: none;
+}
+.scroproduct::-webkit-scrollbar {
+  display: none;
+}
+.itemdisimage::-webkit-scrollbar {
+  display: none;
+}
+.anime.show {
+  animation: show_slide 3s ease forwards;
+}
+@keyframes show_slide {
+  0% {
+    transform: translateY(50%);
+    opacity: 0%;
+  }
+  50% {
+    transform: translateY(-10%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+.table {
+  height: 50%;
+}
+.table thead th {
+  width: 16.6%;
+  text-align: center;
+  padding-block: 1rem;
+}
+.table tbody tr td {
+  text-align: center;
+}
+.cart {
+  @apply h-[90vh] overflow-y-scroll p-7 md:w-[70%];
+}
+.cart::-webkit-scrollbar {
+  display: none;
+}
+.continfo span {
+  width: 40%;
+  text-align: center;
+}
+.noScrolldisplay::-webkit-scrollbar {
   display: none;
 }

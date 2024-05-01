@@ -1,9 +1,6 @@
-
 import type { Metadata } from "next";
 import "./globals.css";
-import { Poppins } from 'next/font/google';
-
-
+import { CartProvider } from "@/utils/CartContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CartProvider>{children}</CartProvider>
+      </body>
     </html>
   );
 }
