@@ -36,7 +36,7 @@ function Itemcard({
   }, [image]);
 
   return (
-    <div className=" bg-zinc-50 shadow-xl px-2 w-56 h-96 m-2  rounded-lg relative">
+    <div className=" bg-zinc-50 shadow-xl px-2 w-56 h-96 m-2  rounded-lg relative duration-300">
       <div
         className=" h-8 w-8 absolute
          right-5 top-4 rounded-full
@@ -91,7 +91,7 @@ function Itemcard({
               const quantity = exiting ? exiting.quantity + 1 : 1;
               dispatch({ type: "ADD", payload: { ...item, quantity } });
             }}
-            className=" text-white bg-[#3D3E43] p-3 w-[80%] duration-200 my-3 flex justify-between rounded-md active:bg-zinc-500"
+            className=" text-white bg-[#3D3E43] p-3 w-[80%] duration-200 my-3 flex justify-between rounded-md active:bg-blue-950 hover:bg-blue-800"
           >
             <span>add to cart</span> <span>(${price})</span>
           </button>

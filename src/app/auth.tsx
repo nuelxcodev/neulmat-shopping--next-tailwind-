@@ -1,16 +1,8 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
-
-async function getUser(email: string, password: string): Promise<any> {
-  return {
-    id: 1,
-    name: "test user",
-    email: email,
-    password: password,
-    isAdmin: false,
-  };
-}
+import { Dbconnection } from "@/lib/dbconnection";
+import USER from "@/lib/models/User";
 
 export const {
   auth,
@@ -27,11 +19,25 @@ export const {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await getUser(
-          credentials.email as string,
-          credentials.password as string
-        );
-        return user ?? null;
+        const { email, password } = credentials;
+        Dbconnection();
+        const user = await USER.findOne({ email });
+        if (!user) {
+          const newUser = await USER.create({
+            email,
+            password,
+            username: "test",
+          });
+          return newUser;
+        }
+
+        // Check if the user is an admin
+        const isAdmin = user.isAdmin || false; // Assuming isAdmin is a boolean field in the USER model
+
+        return {
+          ...user.toJSON(),
+          isAdmin,
+        };
       },
     }),
   ],

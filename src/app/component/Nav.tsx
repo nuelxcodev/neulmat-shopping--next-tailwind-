@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,9 +10,21 @@ import {
 import Logo from "./parts/Logo";
 import Searchinput from "./parts/Searchinput";
 import Cart from "./parts/Cart";
+import { logout } from "@/lib/action";
+import { auth } from "../auth";
+import { checkSignedIn } from "@/utils/Functions";
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const [signedin, setSignedIn] = useState<boolean>();
+
+  const user = checkSignedIn();
+
+  useEffect(() => {
+    user.then((e) => {
+      setSignedIn(e);
+    });
+  }, [user]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -24,7 +36,7 @@ function Nav() {
 
   return (
     <nav
-      className=" bg-neutral-500 p-5"
+      className="bg-neutral-500 p-5 fixed top-0 w-full z-10"
       style={{ fontFamily: "Poppins, sans-serif" }}
     >
       <div className="max-w-7xl mx-auto flex justify-between">
@@ -44,12 +56,20 @@ function Nav() {
               What&apos;s New
             </span>
           </Link>
-
           <Searchinput />
-
-          <Link href="signin">
-            <span className="text-white mr-4 hover:text-gray-300">Sign In</span>
-          </Link>
+          <div>
+            {signedin ? (
+              <button className=" text-white" onClick={() => logout()}>
+                SIGN OUT
+              </button>
+            ) : (
+              <Link href="/auth">
+                <span className="text-white mt-8 hover:text-gray-700">
+                  Sign In
+                </span>
+              </Link>
+            )}
+          </div>
           <Link href="/products/cart">
             <Cart />
           </Link>
@@ -82,7 +102,7 @@ function Nav() {
         </div>
       </div>
       <div
-        className={`md:hidden fixed top-0 right-0 h-full w-64 bg-white z-50 transition-all duration-300 transform ${
+        className={`md:hidden fixed top-16 right-0 h-full w-64 bg-white z-50 transition-all duration-300 transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -103,7 +123,6 @@ function Nav() {
         </div>
         <div className="flex flex-col p-5 gap-5 h-full shadow-lg">
           <Searchinput />
-
           <Link href="/">
             <span className="text-black mt-8 hover:text-gray-700">
               <FontAwesomeIcon icon={faHome} className="mr-2" /> Home
@@ -112,19 +131,28 @@ function Nav() {
           <Link href="/products">
             <span className="text-black mt-8 hover:text-gray-700">
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" />{" "}
-              What&apos;s, New
+              What&apos;s New
             </span>
           </Link>
-          <Link href="/auth/signin">
-            <span className="text-black mt-8 hover:text-gray-700">
-              <FontAwesomeIcon icon={faSignInAlt} className="mr-2" /> Sign In
-            </span>
-          </Link>
+
           <Link href="/products/cart">
             <span className="text-black mt-8 hover:text-gray-700">
               <FontAwesomeIcon icon={faShoppingCart} className="mr-2" /> Cart
             </span>
           </Link>
+
+          <div>
+            {signedin ? (
+              <button onClick={() => logout()}>SIGN OUT</button>
+            ) : (
+              <Link href="/auth">
+                <span className="text-black mt-8 hover:text-gray-700">
+                  <FontAwesomeIcon icon={faSignInAlt} className="mr-2" /> Sign
+                  In
+                </span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>

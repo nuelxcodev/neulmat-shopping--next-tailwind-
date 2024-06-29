@@ -5,11 +5,32 @@ import Itemcard from "../../component/Itemcard";
 import { products } from "@/utils/Products";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
-import { Filtereditem } from "@/utils/Functions";
 import Pagination from "../../component/Pagination";
+import { useSearchParams } from "next/navigation";
 
 function page() {
-  const filterproduct = Filtereditem();
+  const categoryquery = useSearchParams().get("category");
+  const searchquery: any = useSearchParams().get("search");
+
+  const [result, setresult] = useState([]);
+
+  useEffect(() => {
+    if (searchquery) {
+      const searchfilter = products;
+      const searchText: string = searchquery.toLocaleLowerCase();
+      const finalresult: any = searchfilter.filter((search) => {
+        return (search.title + search.category + search.description)
+          .toLocaleLowerCase()
+          .includes(searchText);
+      });
+      setresult(finalresult);
+    }
+  }, [searchquery]);
+
+  const items: any = products.filter(
+    (product) => product.category === categoryquery
+  );
+  const filterproduct = categoryquery ? items : searchquery ? result : products;
 
   return (
     <>
@@ -30,7 +51,7 @@ function page() {
           </div>
         </aside>
         <section className="md:w-[80%]  ">
-          <Pagination data={filterproduct} pattern={true} />
+          <Pagination data={filterproduct} />
         </section>
       </div>
     </>

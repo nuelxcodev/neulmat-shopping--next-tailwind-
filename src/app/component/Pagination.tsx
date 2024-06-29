@@ -8,15 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
 
-interface Prop {
-  data: any;
-  pattern: boolean;
-}
-
-function Pagination({ data, pattern }: Prop) {
+function Pagination({ data }: any) {
   const [isloading, setisloading] = useState(true);
   const [currentpage, setcurrentpage] = useState(1);
-  const maxNumofitemsPerPage = pattern ? 10 : 6;
+  const maxNumofitemsPerPage = 10 
 
   const lastitem = currentpage * maxNumofitemsPerPage;
   const firstitem = lastitem - maxNumofitemsPerPage;
@@ -44,9 +39,9 @@ function Pagination({ data, pattern }: Prop) {
     <div className="flex justify-center items-center -z-40  flex-col h-[90vh] ">
       {/* itemscontainer */}
       <section
-        className={`flex flex-wrap overflow-y-scroll  justify-center items-center scroproduct ${
-          pattern ? "h-[80%]" : "h-max"
-        }`}
+        className="flex flex-wrap overflow-y-scroll  justify-center items-center scroproduct 
+          h-[80%] 
+        "
       >
         {paginationResult.map((product: any) => (
           <div key={product.id}>
@@ -58,22 +53,12 @@ function Pagination({ data, pattern }: Prop) {
       {/* item pagination buttons */}
       <div
         className={`flex items-center justify-center my-6 gap-3 w-full ${
-          isloading
-            ? "hidden"
-            : pattern
-            ? " static"
-            : " absolute justify-between"
+          isloading ? "hidden" : " static"
         }`}
       >
         {/* previous button */}
-        <FontAwesomeIcon
-          icon={faAngleLeft}
-          onClick={prevpage}
-          className={`${
-            pattern ? "" : "  bg-black text-white p-3 rounded-full opacity-50"
-          }`}
-        />
-        <div className={` ${pattern ? "block" : "hidden"}`}>
+        <FontAwesomeIcon icon={faAngleLeft} onClick={prevpage} />
+        <div>
           {pageNum.map((p: any, i: number) => (
             <span
               key={i}
@@ -89,13 +74,7 @@ function Pagination({ data, pattern }: Prop) {
           ))}
         </div>
         {/* next button */}
-        <FontAwesomeIcon
-          icon={faAngleRight}
-          onClick={nextpage}
-          className={`${
-            pattern ? "" : " text-white bg-black p-3 rounded-full opacity-50"
-          }`}
-        />
+        <FontAwesomeIcon icon={faAngleRight} onClick={nextpage} />
       </div>
     </div>
   );

@@ -5,7 +5,6 @@
 body {
   max-width: 1536px;
   margin: auto;
-  overflow: hidden;
 }
 .navigation {
   @apply flex md:h-max z-50 justify-around flex-col-reverse md:flex-row fixed md:static bg-white w-full md:w-max;

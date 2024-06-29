@@ -1,18 +1,19 @@
 import type { NextAuthConfig } from "next-auth";
+import { NextResponse } from "next/server";
 
 export const authConfig = {
-  secret: "fdrtfyghuijouytrdeswrtyuiytre",
+  secret: process.env.NEXTAUTH_SECRET!,
   session: {
     strategy: "jwt",
   },
   pages: {
     error: "/",
-    signIn: "/auth/signin",
+    signIn: "/auth",
   },
   callbacks: {
-    authorized({ auth }) {
+    async authorized({ auth }) {
       const isAuthenticated = !!auth?.user;
-      console.log(isAuthenticated)
+
       return isAuthenticated;
     },
   },

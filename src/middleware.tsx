@@ -8,6 +8,9 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isAuthenticated = !!req.auth;
   const isAdmin = true;
+
+  console.log(req.nextUrl.href);
+
   const isDashboard = nextUrl.pathname.startsWith("/dashboard");
   const ischeckoutpage = nextUrl.pathname.startsWith("/checkout");
 
@@ -15,15 +18,27 @@ export default auth((req) => {
     (!isAuthenticated && isDashboard) ||
     (!isAuthenticated && ischeckoutpage)
   ) {
-    return Response.redirect(new URL("/auth/signin", nextUrl));
+    return NextResponse.redirect(new URL("/signin", nextUrl));
   }
 
   if (!isDashboard && !ischeckoutpage) {
-    return Response.redirect("/");
+    return NextResponse.redirect("/");
   }
- 
+
+  return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/dashboard", "/checkout"],
+  matcher: [
+    "/dashboard",
+    "/dashboard/profile",
+    "/dashboard/messages",
+    "/dashboard/messages/[user]",
+    "/dashboard/settings",
+    "/dashboard/notifications",
+    "/checkout",
+    "/checkout/shipping",
+    "/checkout/history",
+    "/checkout/success",
+  ],
 };

@@ -5,7 +5,7 @@ function Storelayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Nav />
-      <div>{children}</div>
+      <div className=" mt-20">{children}</div>
     </div>
   );
 }

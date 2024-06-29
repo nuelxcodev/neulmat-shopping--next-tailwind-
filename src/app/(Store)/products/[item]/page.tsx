@@ -4,7 +4,7 @@
 import Rating from "@/app/component/Rating";
 import Updatebutton from "@/app/component/parts/Updatebutton";
 import { CartContext } from "@/utils/CartContext";
-import { shopNow } from "@/utils/Functions";
+
 import { products } from "@/utils/Products";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -48,7 +48,6 @@ function page() {
 
   const handleClick = () => {
     setIsLoading(true);
-    shopNow();
     // Simulate loading process
     setTimeout(() => {
       setIsLoading(false);
